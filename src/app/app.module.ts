@@ -7,6 +7,8 @@ import { NoteItemComponent } from './content/note-item/note-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoteComponent } from './shared/note/note.component';
 
+import { NoteService } from './services/note.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,7 +20,9 @@ import { NoteComponent } from './shared/note/note.component';
     BrowserModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    NoteService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

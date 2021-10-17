@@ -1,24 +1,20 @@
 import { Component, OnInit } from '@angular/core';
+import { NoteService } from 'src/app/services/note.service';
 import { Note } from '../../model/note';
 
 @Component({
-    selector: 'app-note-item',
-    templateUrl: './note-item.component.html',
-    styleUrls: ['./note-item.component.css']
+  selector: 'app-note-item',
+  templateUrl: './note-item.component.html',
+  styleUrls: ['./note-item.component.css']
 })
 export class NoteItemComponent implements OnInit {
 
-    public notes: Note[] = [];
+  public notes: Note[] = [];
 
-    constructor() { }
+  constructor(private noteService: NoteService) { }
 
-    ngOnInit(): void {
-        let note1 = new Note();
-        note1.content = "he, he";
-        this.notes.push(note1);
-        note1 = new Note();
-        note1.content = "ho, ho";
-        this.notes.push(note1);
-    }
+  ngOnInit(): void {
+    this.notes = this.noteService.getNotes();
+  }
 
 }
