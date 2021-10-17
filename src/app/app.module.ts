@@ -5,11 +5,13 @@ import { MatCardModule } from '@angular/material/card';
 import { AppComponent } from './app.component';
 import { NoteItemComponent } from './content/note-item/note-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NoteComponent } from './shared/note/note.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NoteItemComponent
+    NoteItemComponent,
+    NoteComponent
   ],
   imports: [
     MatCardModule,
