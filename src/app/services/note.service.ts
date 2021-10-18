@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Note } from '../model/note';
 
+import { Observable } from 'rxjs';
+import { of as ObservableOf } from 'rxjs';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -15,11 +18,11 @@ export class NoteService {
     ];
   }
 
-  getNotes(): Note[] {
-    return this.notes;
+  getNotes(): Observable<Note[]> {
+    return ObservableOf(this.notes);
   }
 
-  createNote(note: Note) {
-    return true;
+  createNote(note: Note): Observable<any> {
+    return ObservableOf({ result: true });
   }
 }

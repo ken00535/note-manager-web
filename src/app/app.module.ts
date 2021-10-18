@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { NoteItemComponent } from './content/note-item/note-item.component';
@@ -17,6 +18,7 @@ import { NoteService } from './services/note.service';
   ],
   imports: [
     MatCardModule,
+    MatButtonModule,
     BrowserModule,
     BrowserAnimationsModule
   ],

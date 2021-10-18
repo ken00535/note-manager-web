@@ -1,4 +1,10 @@
 <mat-card>
-    {{ note.content }}<br>
-    {{ note.comment }}
+  <mat-card-content>
+    <p>{{ note.content }}</p>
+    <p>{{ note.comment }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>EDIT</button>
+    <button mat-button>DELETE</button>
+  </mat-card-actions>
 </mat-card>
