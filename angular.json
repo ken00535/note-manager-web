@@ -64,7 +64,8 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "port": 14200,
-            "browserTarget": "note-manager:build"
+            "browserTarget": "note-manager:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {

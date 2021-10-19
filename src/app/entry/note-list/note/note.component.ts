@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Note } from '../../model/note';
+import { Note } from '../../../model/note';
 
 @Component({
   selector: 'app-note',

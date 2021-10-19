@@ -2,25 +2,29 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { NoteItemComponent } from './content/note-item/note-item.component';
+import { NoteListComponent } from './entry/note-list/note-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NoteComponent } from './shared/note/note.component';
+import { NoteComponent } from './entry/note-list/note/note.component';
 
 import { NoteService } from './services/note.service';
+import { NavbarComponent } from './entry/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NoteItemComponent,
-    NoteComponent
+    NoteListComponent,
+    NoteComponent,
+    NavbarComponent
   ],
   imports: [
     MatCardModule,
     MatButtonModule,
     BrowserModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    HttpClientModule
   ],
   providers: [
     NoteService
