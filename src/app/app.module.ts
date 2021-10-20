@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,6 +37,7 @@ import { AddNoteDialogComponent } from './entry/add-note-dialog/add-note-dialog.
     MatInputModule,
     BrowserModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [

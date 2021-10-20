@@ -16,7 +16,11 @@ export class NoteService {
     return this.http.get<Note[]>('/api/notes')
   }
 
-  createNote(note: Note): Observable<any> {
+  createNote(note: Note[]): Observable<any> {
     return this.http.post('/api/notes', note);
+  }
+
+  deleteNote(note: Note): Observable<any> {
+    return this.http.delete(`/api/notes/${note.id}`);
   }
 }
