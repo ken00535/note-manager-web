@@ -1,4 +1,4 @@
-import { Note } from './note';
+import { NoteUnit } from './note';
 
 describe('Note', () => {
   it('should create an instance', () => {

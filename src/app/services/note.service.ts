@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Note } from '../model/note';
+import { NoteUnit } from '../model/note';
 
 import { Observable } from 'rxjs';
 import { of as ObservableOf } from 'rxjs';
@@ -10,17 +10,31 @@ import { of as ObservableOf } from 'rxjs';
 })
 export class NoteService {
 
+  private noteData: NoteUnit = null;
+
   constructor(private http: HttpClient) { }
 
-  getNotes(): Observable<Note[]> {
-    return this.http.get<Note[]>('/api/notes')
+  set selectedNote(note: NoteUnit) {
+    this.noteData = note;
   }
 
-  createNote(note: Note[]): Observable<any> {
+  get selectedNote(): NoteUnit {
+    return this.noteData;
+  }
+
+  getNotes(): Observable<NoteUnit[]> {
+    return this.http.get<NoteUnit[]>('/api/notes')
+  }
+
+  createNote(note: NoteUnit[]): Observable<any> {
     return this.http.post('/api/notes', note);
   }
 
-  deleteNote(note: Note): Observable<any> {
+  deleteNote(note: NoteUnit): Observable<any> {
     return this.http.delete(`/api/notes/${note.id}`);
+  }
+
+  updateNote(note: NoteUnit): Observable<any> {
+    return this.http.put(`/api/notes/${note.id}`, note);
   }
 }

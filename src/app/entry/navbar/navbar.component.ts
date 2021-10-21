@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { NoteService } from 'src/app/services/note.service';
 import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.component';
 
 @Component({
@@ -9,13 +10,16 @@ import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.compo
 })
 export class NavbarComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    public dialog: MatDialog,
+    private noteService: NoteService) { }
 
   ngOnInit(): void {
   }
 
   onClick() {
-    this.dialog.open(AddNoteDialogComponent)
+    this.noteService.selectedNote = null;
+    this.dialog.open(AddNoteDialogComponent);
   }
 
 }

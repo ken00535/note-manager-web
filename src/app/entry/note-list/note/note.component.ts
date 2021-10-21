@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Note } from '../../../model/note';
+import { MatDialog } from '@angular/material/dialog';
+import { NoteUnit } from '../../../model/note';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
+import { AddNoteDialogComponent } from '../../add-note-dialog/add-note-dialog.component';
 
 @Component({
   selector: 'app-note',
@@ -10,9 +12,10 @@ import { EventbusService } from 'src/app/services/eventbus.service';
 })
 export class NoteComponent implements OnInit {
 
-  @Input() public note: Note;
+  @Input() public note: NoteUnit;
 
   constructor(
+    public dialog: MatDialog,
     private noteService: NoteService,
     private eventbus: EventbusService
   ) { }
@@ -24,6 +27,11 @@ export class NoteComponent implements OnInit {
       .subscribe(() => {
         this.eventbus.broadcast("delete_note")
       });
+  }
+
+  onEdit() {
+    this.noteService.selectedNote = this.note;
+    this.dialog.open(AddNoteDialogComponent);
   }
 
 }
