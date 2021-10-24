@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
       switchMap((query) => this.noteService.getNotes(query)),
       share()
     );
-    this.notes$.subscribe((notes) => { this.updateDisplayNotes() });
+    this.notes$.subscribe((notes) => { this.updateDisplayNotes(notes) });
   }
 
   onClick() {
@@ -46,8 +46,9 @@ export class NavbarComponent implements OnInit {
     this.searchTerms.next(this.searchString);
   }
 
-  updateDisplayNotes() {
-    this.eventbus.broadcast(EventType.DELETE_NOTE)
+  updateDisplayNotes(notes) {
+    this.noteService.displayNotes = notes;
+    this.eventbus.broadcast(EventType.SEATCH_NOTE);
   }
 
 }

@@ -12,6 +12,7 @@ export class NoteService {
 
   private noteData: NoteUnit = null;
   private notesData: NoteUnit[] = [];
+  private pageData: number = 1;
 
   constructor(private http: HttpClient) { }
 
@@ -31,11 +32,16 @@ export class NoteService {
     return this.notesData;
   }
 
-  getNotes(query?: string): Observable<NoteUnit[]> {
-    let url = `/api/notes`;
-    if (typeof query !== 'undefined') {
-      url = `/api/notes?kw=${query}`
-    }
+  set page(p: number) {
+    this.pageData = p;
+  }
+
+  get page(): number {
+    return this.pageData;
+  }
+
+  getNotes(query = ''): Observable<NoteUnit[]> {
+    let url = `/api/notes?kw=${query};page=${this.pageData}`
     return this.http.get<NoteUnit[]>(url)
   }
 

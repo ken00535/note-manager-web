@@ -4,8 +4,9 @@
   </button>
   <span class="toolbar-seprator"></span>
   <input name="searchBox"
-         [(ngModel)]="searchString"
+         class="search-bar"
          placeholder="search"
+         [(ngModel)]="searchString"
          (keyup.enter)="search()"
          type="search">
 </mat-toolbar>
