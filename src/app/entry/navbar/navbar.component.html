@@ -3,7 +3,9 @@
     <mat-icon>add</mat-icon>
   </button>
   <span class="toolbar-seprator"></span>
-  <mat-form-field class="full-width" floatLabel="never">
-    <input matInput type="search">
-  </mat-form-field>
+  <input name="searchBox"
+         [(ngModel)]="searchString"
+         placeholder="search"
+         (keyup.enter)="search()"
+         type="search">
 </mat-toolbar>

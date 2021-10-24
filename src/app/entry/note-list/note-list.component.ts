@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
+import { EventType } from '../../model/const/event-type';
 
 import { Observable } from 'rxjs';
 
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 export class NoteListComponent implements OnInit {
 
   public notes$: Observable<NoteUnit[]>;
+  public displayNotes: NoteUnit[] = [];
 
   constructor(
     private noteService: NoteService,
@@ -20,12 +22,22 @@ export class NoteListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.notes$ = this.noteService.getNotes();
+    this.displayNotes = this.noteService.displayNotes;
+    this.noteService.getNotes().subscribe(
+      (notes) => {
+        this.noteService.displayNotes = notes;
+        this.displayNotes = notes;
+      }
+    )
     this.eventbus.on().subscribe((message) => {
-      if (message.topic === 'delete_note' ||
-        message.topic === 'create_note' ||
-        message.topic === 'update_note') {
-        this.notes$ = this.noteService.getNotes();
+      if (message.topic === EventType.DELETE_NOTE ||
+        message.topic === EventType.CREATE_NOTE ||
+        message.topic === EventType.UPDATE_NOTE) {
+        this.noteService.getNotes()
+          .subscribe((notes) => {
+            this.noteService.displayNotes = notes;
+            this.displayNotes = notes;
+          })
       }
     });
   }

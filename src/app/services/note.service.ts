@@ -11,6 +11,7 @@ import { of as ObservableOf } from 'rxjs';
 export class NoteService {
 
   private noteData: NoteUnit = null;
+  private notesData: NoteUnit[] = [];
 
   constructor(private http: HttpClient) { }
 
@@ -22,8 +23,20 @@ export class NoteService {
     return this.noteData;
   }
 
-  getNotes(): Observable<NoteUnit[]> {
-    return this.http.get<NoteUnit[]>('/api/notes')
+  set displayNotes(notes: NoteUnit[]) {
+    this.notesData = notes;
+  }
+
+  get displayNotes(): NoteUnit[] {
+    return this.notesData;
+  }
+
+  getNotes(query?: string): Observable<NoteUnit[]> {
+    let url = `/api/notes`;
+    if (typeof query !== 'undefined') {
+      url = `/api/notes?kw=${query}`
+    }
+    return this.http.get<NoteUnit[]>(url)
   }
 
   createNote(note: NoteUnit[]): Observable<any> {

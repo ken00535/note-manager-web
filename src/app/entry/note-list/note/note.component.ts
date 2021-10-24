@@ -4,6 +4,7 @@ import { NoteUnit } from '../../../model/note';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { AddNoteDialogComponent } from '../../add-note-dialog/add-note-dialog.component';
+import { EventType } from '../../../model/const/event-type';
 
 @Component({
   selector: 'app-note',
@@ -25,7 +26,7 @@ export class NoteComponent implements OnInit {
   onDelete() {
     this.noteService.deleteNote(this.note)
       .subscribe(() => {
-        this.eventbus.broadcast("delete_note")
+        this.eventbus.broadcast(EventType.DELETE_NOTE);
       });
   }
 

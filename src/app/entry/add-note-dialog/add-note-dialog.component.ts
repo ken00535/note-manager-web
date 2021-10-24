@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
+import { EventType } from '../../model/const/event-type';
 
 @Component({
   selector: 'app-add-note-dialog',
@@ -37,12 +38,12 @@ export class AddNoteDialogComponent implements OnInit {
       notes.push(this.note);
       this.noteService.createNote(notes)
         .subscribe(() => {
-          this.eventbus.broadcast("create_note");
+          this.eventbus.broadcast(EventType.CREATE_NOTE);
         });
     } else {
       this.noteService.updateNote(this.note)
         .subscribe(() => {
-          this.eventbus.broadcast("update_note");
+          this.eventbus.broadcast(EventType.UPDATE_NOTE);
         });
     }
     this.dialogRef.close();
