@@ -12,12 +12,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { NoteListComponent } from './entry/note-list/note-list.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NoteComponent } from './entry/note-list/note/note.component';
+
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { NoteService } from './services/note.service';
 import { NavbarComponent } from './entry/navbar/navbar.component';
 import { AddNoteDialogComponent } from './entry/add-note-dialog/add-note-dialog.component';
+import { AppRoutesModule } from './app-routes.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,8 @@ import { AddNoteDialogComponent } from './entry/add-note-dialog/add-note-dialog.
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutesModule
   ],
   providers: [
     NoteService
