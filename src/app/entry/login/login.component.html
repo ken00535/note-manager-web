@@ -1,1 +1,26 @@
-<p>login works!</p>
+<div class="container">
+  <mat-card fxFlex class="login-card">
+    <mat-card-title class="title">Login</mat-card-title>
+    <form [formGroup]="form" (ngSubmit)="login()" novalidate>
+      <mat-card-content>
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" required>
+          <div *ngIf="username.invalid && (username.dirty && username.touched)">
+            <mat-error *ngIf="username.errors.required">Username is required</mat-error>
+          </div>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" formControlName="password" required>
+          <div *ngIf="password.invalid && (password.dirty && password.touched)">
+            <mat-error *ngIf="password.errors.required">Password is required</mat-error>
+          </div>          
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions class="btn-center">
+        <button mat-raised-button type="submit" [disabled]="!form.valid">Login</button>
+        <button mat-raised-button type="cancel">Cancel</button>
+      </mat-card-actions>
+    </form>                  
+  </mat-card>
+</div>

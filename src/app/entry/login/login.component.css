@@ -1,0 +1,31 @@
+.container {
+    height: 100%;
+    background-position: cover;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+}
+  
+.container:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100vh;
+}
+
+.login-card {
+    max-width: 350px;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);  
+}
+
+.title {
+    text-align: center;
+}
+
+.btn-center {
+    display: flex;
+    justify-content: center;
+}
