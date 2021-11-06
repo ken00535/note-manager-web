@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NoteUnit } from '../model/note';
 
 import { Observable } from 'rxjs';
-import { of as ObservableOf } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -40,20 +39,29 @@ export class NoteService {
     return this.pageData;
   }
 
+  createHeader(): { headers: HttpHeaders } {
+    const httpOptions = {
+      headers: new HttpHeaders()
+        .set('Content-Type', 'application/json')
+        .set('Authorization', 'Bearer ' + localStorage.getItem('token'))
+    };
+    return httpOptions;
+  }
+
   getNotes(query = ''): Observable<NoteUnit[]> {
     let url = `/api/notes?kw=${query};page=${this.pageData}`
-    return this.http.get<NoteUnit[]>(url)
+    return this.http.get<NoteUnit[]>(url, this.createHeader())
   }
 
   createNote(note: NoteUnit[]): Observable<any> {
-    return this.http.post('/api/notes', note);
+    return this.http.post('/api/notes', note, this.createHeader());
   }
 
   deleteNote(note: NoteUnit): Observable<any> {
-    return this.http.delete(`/api/notes/${note.id}`);
+    return this.http.delete(`/api/notes/${note.id}`, this.createHeader());
   }
 
   updateNote(note: NoteUnit): Observable<any> {
-    return this.http.put(`/api/notes/${note.id}`, note);
+    return this.http.put(`/api/notes/${note.id}`, note, this.createHeader());
   }
 }
