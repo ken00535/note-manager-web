@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteUnit } from 'src/app/model/note';
 import { NoteService } from 'src/app/services/note.service';
+import { AccountService } from 'src/app/services/account.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.component';
 import { EventType } from '../../model/const/event-type';
 import { Observable, Subject } from 'rxjs';
 import {
-  debounceTime, switchMap,
-  distinctUntilChanged, startWith,
+  switchMap,
+  startWith,
   share
 } from 'rxjs/operators';
 
@@ -25,7 +27,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    private router: Router,
     private noteService: NoteService,
+    private accountService: AccountService,
     private eventbus: EventbusService) { }
 
   ngOnInit(): void {
@@ -49,6 +53,13 @@ export class NavbarComponent implements OnInit {
   updateDisplayNotes(notes) {
     this.noteService.displayNotes = notes;
     this.eventbus.broadcast(EventType.SEATCH_NOTE);
+  }
+
+  logout() {
+    this.accountService.logout()
+      .subscribe(() => {
+        this.router.navigate(['/login']);
+      })
   }
 
 }

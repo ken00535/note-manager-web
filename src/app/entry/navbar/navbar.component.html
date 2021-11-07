@@ -9,4 +9,15 @@
          [(ngModel)]="searchString"
          (keyup.enter)="search()"
          type="search">
+  <button mat-icon-button [matMenuTriggerFor]="menu" id="button-menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" [overlapTrigger]="false">
+    <div>
+      <button mat-menu-item id="button-logout" (click)="logout()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>logout</span>
+      </button>
+    </div>
+  </mat-menu>
 </mat-toolbar>

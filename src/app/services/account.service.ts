@@ -27,6 +27,14 @@ export class AccountService {
     )
   }
 
+  logout() {
+    console.log('AccountService logout');
+    localStorage.setItem('token', '');
+    return new Observable(observer => {
+      observer.next();
+    })
+  }
+
   extractToken(res: Response) {
     localStorage.setItem('token', res['token']);
     return res;
