@@ -5,7 +5,15 @@
 .search-bar {
     height: 35px;
     width: 320px;
-    border-color: grey;
-    border-style: solid;
+    border: none;
     padding-left: 9px;
+    background: none;
+}
+
+.search-bar:focus {
+    outline: 0;
+}
+
+.icon {
+    padding: 4px;
 }
