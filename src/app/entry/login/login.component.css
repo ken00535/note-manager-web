@@ -21,11 +21,23 @@
     transform: translateX(-50%);  
 }
 
-.title {
-    text-align: center;
+.login-field {
+    width: 100%;
 }
 
-.btn-center {
+.login-error-msg {
+    width: 100%;
+    margin-bottom: 30px;
+    color: red;
+    font-size: 13px;
+}
+
+.login-btn {
+    width: 100%;
     display: flex;
     justify-content: center;
+}
+
+.title {
+    text-align: center;
 }

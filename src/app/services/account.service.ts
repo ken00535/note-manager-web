@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError, first, map } from 'rxjs/operators';
 import { AccountUnit } from '../model/account';
 
 export interface LoginResult {
@@ -22,13 +22,18 @@ export class AccountService {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     }).pipe(
       first(),
-      map(this.extractToken)
+      map(this.extractToken),
+      catchError(this.handleError),
     )
   }
 
   extractToken(res: Response) {
     localStorage.setItem('token', res['token']);
     return res;
+  }
+
+  handleError(error: HttpErrorResponse): Observable<never> {
+    return throwError(error.message);
   }
 
 }

@@ -12,6 +12,7 @@ import { AccountService } from 'src/app/services/account.service';
 export class LoginComponent implements OnInit {
 
   public form: FormGroup;
+  public showLoginFailGeneralMessage: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,8 +35,19 @@ export class LoginComponent implements OnInit {
       this.password.value
     )
     this.accountService.login(account)
-      .subscribe(() => {
-        this.router.navigate(['/notes']);
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/notes']);
+        },
+        error: err => {
+          this.loginFailedTrigger(err);
+        }
       })
   }
+
+  loginFailedTrigger(message: string) {
+    this.showLoginFailGeneralMessage = true;
+    console.log('loginFailedTrigger Status: ' + message);
+  }
+
 }

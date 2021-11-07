@@ -3,24 +3,19 @@
     <mat-card-title class="title">Login</mat-card-title>
     <form [formGroup]="form" (ngSubmit)="login()" novalidate>
       <mat-card-content>
-        <mat-form-field>
+        <mat-form-field class="login-field">
           <input matInput placeholder="Username" formControlName="username" required>
-          <div *ngIf="username.invalid && (username.dirty && username.touched)">
-            <mat-error *ngIf="username.errors.required">Username is required</mat-error>
-          </div>
+          <mat-error *ngIf="form.controls['username'].hasError('required')">Username is required</mat-error>
         </mat-form-field>
-        
-        <mat-form-field>
+        <mat-form-field class="login-field">
           <input matInput type="password" placeholder="Password" formControlName="password" required>
-          <div *ngIf="password.invalid && (password.dirty && password.touched)">
-            <mat-error *ngIf="password.errors.required">Password is required</mat-error>
-          </div>          
+          <mat-error *ngIf="form.controls['password'].hasError('required')">Password is required</mat-error>
         </mat-form-field>
+        <div *ngIf="showLoginFailGeneralMessage" class="login-error-msg">invalid username/password</div>
       </mat-card-content>
-      <mat-card-actions class="btn-center">
-        <button mat-raised-button type="submit" [disabled]="!form.valid">Login</button>
-        <button mat-raised-button type="cancel">Cancel</button>
+      <mat-card-actions>
+        <button mat-raised-button type="submit" [disabled]="!form.valid" color="primary" class="login-btn">Login</button>
       </mat-card-actions>
-    </form>                  
+    </form>
   </mat-card>
 </div>
