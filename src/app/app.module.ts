@@ -23,6 +23,7 @@ import { NavbarComponent } from './entry/navbar/navbar.component';
 import { AddNoteDialogComponent } from './entry/add-note-dialog/add-note-dialog.component';
 import { AppRoutesModule } from './app-routes.module';
 import { EditNoteDialogComponent } from './entry/edit-note-dialog/edit-note-dialog.component';
+import { AuthGuard } from './guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { EditNoteDialogComponent } from './entry/edit-note-dialog/edit-note-dial
     AppRoutesModule
   ],
   providers: [
-    NoteService
+    NoteService,
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

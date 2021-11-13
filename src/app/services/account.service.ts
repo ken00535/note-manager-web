@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { Observable, throwError } from 'rxjs';
 import { catchError, first, map } from 'rxjs/operators';
 import { AccountUnit } from '../model/account';
+import { EventbusService } from './eventbus.service';
+import { EventType } from '../model/const/event-type';
 
 export interface LoginResult {
   message: string;
@@ -14,7 +16,9 @@ export interface LoginResult {
 })
 export class AccountService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private eventbus: EventbusService) { }
 
   login(account: AccountUnit) {
     let url = `/api/login`;
@@ -22,7 +26,7 @@ export class AccountService {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     }).pipe(
       first(),
-      map(this.extractToken),
+      map(this.extractToken.bind(this)),
       catchError(this.handleError),
     )
   }
@@ -37,6 +41,7 @@ export class AccountService {
 
   extractToken(res: Response) {
     localStorage.setItem('token', res['token']);
+    this.eventbus.broadcast(EventType.HAS_LOGGED_IN)
     return res;
   }
 

@@ -58,6 +58,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.accountService.logout()
       .subscribe(() => {
+        this.eventbus.broadcast(EventType.HAS_LOGGED_OUT);
         this.router.navigate(['/login']);
       })
   }
