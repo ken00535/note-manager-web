@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { NoteUnit } from '../../../model/note';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
-import { AddNoteDialogComponent } from '../../add-note-dialog/add-note-dialog.component';
+import { EditNoteDialogComponent } from '../../edit-note-dialog/edit-note-dialog.component';
 import { EventType } from '../../../model/const/event-type';
 
 @Component({
@@ -32,7 +32,7 @@ export class NoteComponent implements OnInit {
 
   onEdit() {
     this.noteService.selectedNote = this.note;
-    this.dialog.open(AddNoteDialogComponent);
+    this.dialog.open(EditNoteDialogComponent);
   }
 
 }

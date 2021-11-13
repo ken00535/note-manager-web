@@ -22,6 +22,7 @@ import { NoteService } from './services/note.service';
 import { NavbarComponent } from './entry/navbar/navbar.component';
 import { AddNoteDialogComponent } from './entry/add-note-dialog/add-note-dialog.component';
 import { AppRoutesModule } from './app-routes.module';
+import { EditNoteDialogComponent } from './entry/edit-note-dialog/edit-note-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AppRoutesModule } from './app-routes.module';
     NoteListComponent,
     NoteComponent,
     NavbarComponent,
-    AddNoteDialogComponent
+    AddNoteDialogComponent,
+    EditNoteDialogComponent
   ],
   imports: [
     MatCardModule,
