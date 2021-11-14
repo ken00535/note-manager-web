@@ -5,7 +5,7 @@ import { NoteUnit } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
 
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+
 @Component({
   selector: 'app-note-list',
   templateUrl: './note-list.component.html',
@@ -15,6 +15,9 @@ export class NoteListComponent implements OnInit {
 
   public notes$: Observable<NoteUnit[]>;
   public displayNotes: NoteUnit[] = [];
+  public canLoad = true;
+  public throttle = 300;
+  public scrollDistance = 1;
 
   constructor(
     private noteService: NoteService,
@@ -36,14 +39,18 @@ export class NoteListComponent implements OnInit {
           message.topic === EventType.UPDATE_NOTE) {
           this.noteService.getNotes()
             .subscribe((notes) => {
-              this.noteService.displayNotes = notes;
-              this.displayNotes = notes;
+              if (notes.length !== 0) {
+                this.noteService.displayNotes.push(...notes);
+              } else {
+                this.canLoad = false;
+              }
             });
         }
       });
     this.eventbus.on()
       .subscribe((message) => {
         if (message.topic === EventType.SEATCH_NOTE) {
+          this.canLoad = true;
           this.displayNotes = this.noteService.displayNotes;
         }
       });
@@ -54,10 +61,10 @@ export class NoteListComponent implements OnInit {
     this.eventbus.broadcast(EventType.UPDATE_NOTE);
   }
 
-  subPage() {
-    if (this.noteService.page > 1) {
-      this.noteService.page--;
-      this.eventbus.broadcast(EventType.UPDATE_NOTE);
+  onScroll() {
+    console.log("scrolled down!!");
+    if (this.canLoad) {
+      this.addPage();
     }
   }
 

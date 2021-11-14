@@ -12,6 +12,7 @@ export class NoteService {
   private noteData: NoteUnit = null;
   private notesData: NoteUnit[] = [];
   private pageData: number = 1;
+  private queryTerm: string = "";
 
   constructor(private http: HttpClient) { }
 
@@ -39,6 +40,10 @@ export class NoteService {
     return this.pageData;
   }
 
+  set query(s: string) {
+    this.queryTerm = s;
+  }
+
   createHeader(): { headers: HttpHeaders } {
     const httpOptions = {
       headers: new HttpHeaders()
@@ -49,6 +54,11 @@ export class NoteService {
   }
 
   getNotes(query = ''): Observable<NoteUnit[]> {
+    if (query === '') {
+      query = this.queryTerm;
+    } else {
+      this.queryTerm = query;
+    }
     let url = `/api/notes?kw=${query};page=${this.pageData}`
     return this.http.get<NoteUnit[]>(url, this.createHeader())
   }

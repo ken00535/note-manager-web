@@ -1,7 +1,11 @@
 <app-navbar></app-navbar>
 <div class="container">
-    <app-note *ngFor="let note of displayNotes" [note]="note">
-    </app-note>
-    <button mat-icon-button (click)="subPage()" color="primary"><mat-icon>arrow_back</mat-icon></button>
-    <button mat-icon-button (click)="addPage()" color="primary"><mat-icon>arrow_forward</mat-icon></button>
+    <div infinite-scroll
+      [infiniteScrollDistance]="scrollDistance"
+      [infiniteScrollThrottle]="throttle"
+      [alwaysCallback]="true"
+      (scrolled)="onScroll()">
+        <app-note *ngFor="let note of displayNotes" [note]="note">
+        </app-note>
+    </div>
 </div>

@@ -18,6 +18,9 @@
     padding: 4px;
 }
 
-.background {
+.nav-bar {
     background:#F0F0F0;
+    position: fixed;
+    top: 0;
+    z-index: 2;
 }

@@ -1,4 +1,7 @@
 .container {
+    position: absolute;
+    padding-top: 64px;
+    padding-bottom: 64px;
     margin-left: 10%;
     margin-right: 10%;
 }

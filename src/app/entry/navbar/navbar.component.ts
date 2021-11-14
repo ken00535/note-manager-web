@@ -47,6 +47,8 @@ export class NavbarComponent implements OnInit {
   }
 
   search() {
+    this.noteService.page = 1;
+    this.noteService.query = this.searchString;
     this.searchTerms.next(this.searchString);
   }
 
