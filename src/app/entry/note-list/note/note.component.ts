@@ -35,4 +35,11 @@ export class NoteComponent implements OnInit {
     this.dialog.open(EditNoteDialogComponent);
   }
 
+  showCommentMessage(): boolean {
+    if (this.note.comment !== '') {
+      return true;
+    }
+    return false;
+  }
+
 }

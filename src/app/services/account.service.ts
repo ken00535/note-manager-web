@@ -26,7 +26,7 @@ export class AccountService {
       headers: new HttpHeaders().set('Content-Type', 'application/json'),
     }).pipe(
       first(),
-      map(this.extractToken.bind(this)),
+      map((res: Response) => (this.extractToken(res))),
       catchError(this.handleError),
     )
   }

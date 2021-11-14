@@ -1,25 +1,27 @@
-<mat-dialog-content class="post-form">
-  <div>
-    <mat-form-field>
-      <textarea matInput
-                placeholder="Content"
-                name="contentText"
-                rows="3"
-                [(ngModel)]="content">
-      </textarea>
-    </mat-form-field>
-  </div>
-  <div>
-    <mat-form-field>
-      <textarea matInput
-                placeholder="Comment"
-                rows="3"
-                [(ngModel)]="comment">
-      </textarea>
-    </mat-form-field>
-  </div>
-</mat-dialog-content>
-<mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="onSubmit()">Edit</button>
-</mat-dialog-actions>
+<div class="dialog">
+  <mat-dialog-content class="post-form">
+    <div class="field">
+      <mat-form-field floatLabel="always">
+        <textarea matInput
+                  placeholder="Content"
+                  name="contentText"
+                  rows="6"
+                  [(ngModel)]="content">
+        </textarea>
+      </mat-form-field>
+    </div>
+    <div class="field">
+      <mat-form-field floatLabel="always">
+        <textarea matInput
+                  placeholder="Comment"
+                  rows="6"
+                  [(ngModel)]="comment">
+        </textarea>
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button (click)="onSubmit()" color="primary">Edit</button>
+  </mat-dialog-actions>
+</div>

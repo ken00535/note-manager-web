@@ -1,10 +1,14 @@
-<mat-card>
-  <mat-card-content>
-    <p>{{ note.content }}</p>
-    <p>{{ note.comment }}</p>
-  </mat-card-content>
-  <mat-card-actions>
-    <button mat-button (click)="onEdit()">EDIT</button>
-    <button mat-button (click)="onDelete()">DELETE</button>
-  </mat-card-actions>
-</mat-card>
+<div class="note">
+  <mat-card>
+    <mat-card-content>
+      <p>{{ note.content }}</p>
+      <div *ngIf="showCommentMessage()" class="comment">
+        <p>{{ note.comment }}</p>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button (click)="onEdit()">EDIT</button>
+      <button mat-button (click)="onDelete()">DELETE</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
