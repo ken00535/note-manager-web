@@ -26,7 +26,7 @@ export class NoteComponent implements OnInit {
   onDelete() {
     this.noteService.deleteNote(this.note)
       .subscribe(() => {
-        this.eventbus.broadcast(EventType.DELETE_NOTE);
+        this.eventbus.broadcast(EventType.NOTE_DELETED, this.note);
       });
   }
 

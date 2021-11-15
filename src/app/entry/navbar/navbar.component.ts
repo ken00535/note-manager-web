@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit {
     this.notes$.subscribe((notes) => { this.updateDisplayNotes(notes) });
   }
 
-  onClick() {
+  addNote() {
     this.noteService.selectedNote = null;
     this.dialog.open(AddNoteDialogComponent);
   }
@@ -60,7 +60,7 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.accountService.logout()
       .subscribe(() => {
-        this.eventbus.broadcast(EventType.HAS_LOGGED_OUT);
+        this.eventbus.broadcast(EventType.LOGGED_OUT);
         this.router.navigate(['/login']);
       })
   }

@@ -41,7 +41,7 @@ export class AccountService {
 
   extractToken(res: Response) {
     localStorage.setItem('token', res['token']);
-    this.eventbus.broadcast(EventType.HAS_LOGGED_IN)
+    this.eventbus.broadcast(EventType.LOGGED_IN)
     return res;
   }
 

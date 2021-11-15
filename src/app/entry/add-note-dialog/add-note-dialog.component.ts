@@ -30,14 +30,15 @@ export class AddNoteDialogComponent implements OnInit {
     this.comment = this.note.comment;
   }
 
-  onSubmit() {
+  addNote() {
     this.note.content = this.content;
     this.note.comment = this.comment;
     let notes: NoteUnit[] = [];
     notes.push(this.note);
-    this.noteService.createNote(notes)
-      .subscribe(() => {
-        this.eventbus.broadcast(EventType.CREATE_NOTE);
+    this.noteService.addNote(notes)
+      .subscribe((res) => {
+        this.note.id = res.id;
+        this.eventbus.broadcast(EventType.NOTE_ADDED, this.note);
       });
     this.dialogRef.close();
   }

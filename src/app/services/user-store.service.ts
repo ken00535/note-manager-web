@@ -16,9 +16,9 @@ export class UserStoreService {
     }
     this.eventbus.on()
       .subscribe((message) => {
-        if (message.topic === EventType.HAS_LOGGED_IN) {
+        if (message.topic === EventType.LOGGED_IN) {
           this.isLogged = true;
-        } else if (message.topic === EventType.HAS_LOGGED_OUT) {
+        } else if (message.topic === EventType.LOGGED_OUT) {
           this.isLogged = false;
         }
       });

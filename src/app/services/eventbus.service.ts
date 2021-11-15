@@ -3,6 +3,7 @@ import { Subject, Observable } from 'rxjs';
 
 export interface BroadcastEvent {
   topic: string;
+  payload: Object;
 }
 
 @Injectable({
@@ -15,8 +16,8 @@ export class EventbusService {
 
   constructor() { }
 
-  broadcast(topic: string): void {
-    const be: BroadcastEvent = { topic: topic };
+  broadcast(topic: string, payload?: Object): void {
+    const be: BroadcastEvent = { topic: topic, payload: payload };
     if (EventbusService.eventBus && !EventbusService.eventBus.isStopped) {
       EventbusService.eventBus.next(be);
     }

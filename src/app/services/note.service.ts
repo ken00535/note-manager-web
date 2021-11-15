@@ -63,7 +63,7 @@ export class NoteService {
     return this.http.get<NoteUnit[]>(url, this.createHeader())
   }
 
-  createNote(note: NoteUnit[]): Observable<any> {
+  addNote(note: NoteUnit[]): Observable<any> {
     return this.http.post('/api/notes', note, this.createHeader());
   }
 

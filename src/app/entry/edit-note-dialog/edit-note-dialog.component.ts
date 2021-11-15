@@ -35,7 +35,7 @@ export class EditNoteDialogComponent implements OnInit {
     this.note.comment = this.comment;
     this.noteService.updateNote(this.note)
       .subscribe(() => {
-        this.eventbus.broadcast(EventType.UPDATE_NOTE);
+        this.eventbus.broadcast(EventType.NOTE_EDITED);
       });
     this.dialogRef.close();
   }
