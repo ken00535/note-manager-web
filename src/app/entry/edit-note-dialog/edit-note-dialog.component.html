@@ -2,21 +2,23 @@
   <mat-dialog-content class="post-form">
     <div class="field">
       <mat-form-field floatLabel="always">
-        <textarea matInput
-                  placeholder="Content"
+        <mat-label>Content</mat-label>
+        <textarea matInput #contentArea
+                  matTextareaAutosize matAutosizeMinRows="2"
                   name="contentText"
-                  rows="6"
                   [(ngModel)]="content">
         </textarea>
+        <mat-hint align="end">{{contentArea.value.length}}</mat-hint>
       </mat-form-field>
     </div>
     <div class="field">
       <mat-form-field floatLabel="always">
-        <textarea matInput
-                  placeholder="Comment"
-                  rows="6"
+        <mat-label>Comment</mat-label>
+        <textarea matInput #commentArea
+                  matTextareaAutosize matAutosizeMinRows="2"
                   [(ngModel)]="comment">
         </textarea>
+        <mat-hint align="end">{{commentArea.value.length}}</mat-hint>
       </mat-form-field>
     </div>
   </mat-dialog-content>

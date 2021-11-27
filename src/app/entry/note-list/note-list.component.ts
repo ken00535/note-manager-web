@@ -4,8 +4,8 @@ import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
 
-import { Observable } from 'rxjs';
-import { filter, switchMap, map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { filter, switchMap, map, first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-note-list',
@@ -19,6 +19,11 @@ export class NoteListComponent implements OnInit {
   public canLoad = true;
   public throttle = 100;
   public scrollDistance = 1;
+
+  private noteAddedEvent$: Subscription;
+  private searchNoteEvent$: Subscription;
+  private noteDeletedEvent$: Subscription;
+  private notePageAddedEvent$: Subscription;
 
   constructor(
     private noteService: NoteService,
@@ -37,10 +42,25 @@ export class NoteListComponent implements OnInit {
     this.subscribeSearchNoteEvent();
     this.subscribeNoteDeletedEvent();
     this.subscribeNotePageAddedEvent();
+    this.subscribeLogoutEvent();
+  }
+
+  subscribeLogoutEvent() {
+    this.eventbus.on()
+      .pipe(
+        filter(message => message.topic === EventType.LOGGED_OUT),
+        first(),
+      )
+      .subscribe(() => {
+        this.noteAddedEvent$.unsubscribe();
+        this.searchNoteEvent$.unsubscribe();
+        this.noteDeletedEvent$.unsubscribe();
+        this.notePageAddedEvent$.unsubscribe();
+      });
   }
 
   subscribeNotePageAddedEvent() {
-    this.eventbus.on()
+    this.notePageAddedEvent$ = this.eventbus.on()
       .pipe(
         filter(message => message.topic === EventType.NOTE_PAGE_ADDED),
         switchMap(() => this.noteService.getNotes())
@@ -55,7 +75,7 @@ export class NoteListComponent implements OnInit {
   }
 
   subscribeSearchNoteEvent() {
-    this.eventbus.on()
+    this.searchNoteEvent$ = this.eventbus.on()
       .subscribe((message) => {
         if (message.topic === EventType.SEATCH_NOTE) {
           window.scroll(0, 0);
@@ -66,7 +86,7 @@ export class NoteListComponent implements OnInit {
   }
 
   subscribeNoteAddedEvent() {
-    this.eventbus.on()
+    this.noteAddedEvent$ = this.eventbus.on()
       .pipe(
         filter(message => {
           let result = message.topic === EventType.NOTE_ADDED;
@@ -82,7 +102,7 @@ export class NoteListComponent implements OnInit {
   }
 
   subscribeNoteDeletedEvent() {
-    this.eventbus.on()
+    this.noteDeletedEvent$ = this.eventbus.on()
       .pipe(
         filter(message => {
           let result = message.topic === EventType.NOTE_DELETED;
