@@ -17,6 +17,7 @@ export class NoteListComponent implements OnInit {
   public notes$: Observable<NoteUnit[]>;
   public displayNotes: NoteUnit[] = [];
   public canLoad = true;
+  public isLoading = false;
   public throttle = 100;
   public scrollDistance = 1;
 
@@ -66,6 +67,7 @@ export class NoteListComponent implements OnInit {
         switchMap(() => this.noteService.getNotes())
       )
       .subscribe((notes) => {
+        this.isLoading = false;
         if (notes.length !== 0) {
           this.noteService.displayNotes.push(...notes);
         } else {
@@ -123,7 +125,8 @@ export class NoteListComponent implements OnInit {
 
   onScroll() {
     console.log("scrolled down!!");
-    if (this.canLoad) {
+    if (this.canLoad && !this.isLoading) {
+      this.isLoading = true;
       this.addPage();
     }
   }
