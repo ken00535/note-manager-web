@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-add-note-dialog',
@@ -18,6 +21,7 @@ export class AddNoteDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddNoteDialogComponent>,
+    private snackBar: MatSnackBar,
     private noteService: NoteService,
     private eventbus: EventbusService) { }
 
@@ -36,6 +40,9 @@ export class AddNoteDialogComponent implements OnInit {
     let notes: NoteUnit[] = [];
     notes.push(this.note);
     this.noteService.addNote(notes)
+      .pipe(
+        catchError(() => this.showSnack())
+      )
       .subscribe((res) => {
         this.note.id = res.id;
         this.eventbus.broadcast(EventType.NOTE_ADDED, this.note);
@@ -43,4 +50,8 @@ export class AddNoteDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  showSnack() {
+    this.snackBar.open('You have no permission', 'Close', { panelClass: ['error'] });
+    return throwError('');
+  }
 }

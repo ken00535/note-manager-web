@@ -4,6 +4,9 @@ import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-edit-note-dialog',
@@ -18,6 +21,7 @@ export class EditNoteDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditNoteDialogComponent>,
+    private snackBar: MatSnackBar,
     private noteService: NoteService,
     private eventbus: EventbusService) { }
 
@@ -34,10 +38,18 @@ export class EditNoteDialogComponent implements OnInit {
     this.note.content = this.content;
     this.note.comment = this.comment;
     this.noteService.updateNote(this.note)
+      .pipe(
+        catchError(() => this.showSnack())
+      )
       .subscribe(() => {
         this.eventbus.broadcast(EventType.NOTE_EDITED);
       });
     this.dialogRef.close();
+  }
+
+  showSnack() {
+    this.snackBar.open('You have no permission', 'Close', { panelClass: ['error'] });
+    return throwError('');
   }
 
 }

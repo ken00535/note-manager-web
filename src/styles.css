@@ -6,3 +6,12 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+
+.error {
+    background-color: #f44336;
+    color: white;
+}
+
+.error .mat-simple-snackbar-action {
+    color: white;
+}
