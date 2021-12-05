@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NoteUnit } from '../model/note';
 
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class NoteService {
   private notesData: NoteUnit[] = [];
   private pageData: number = 1;
   private queryTerm: string = "";
+  private tagData: string = "";
+  private canLoad: boolean = true;
 
   constructor(private http: HttpClient) { }
 
@@ -33,11 +36,18 @@ export class NoteService {
   }
 
   set page(p: number) {
+    if (p === 1) {
+      this.canLoad = true;
+    }
     this.pageData = p;
   }
 
   get page(): number {
     return this.pageData;
+  }
+
+  set tag(s: string) {
+    this.tagData = s;
   }
 
   set query(s: string) {
@@ -54,13 +64,27 @@ export class NoteService {
   }
 
   getNotes(query = ''): Observable<NoteUnit[]> {
+    if (!this.canLoad) {
+      return new Observable((observer) => {
+        observer.next([]);
+      });
+    }
     if (query === '') {
       query = this.queryTerm;
     } else {
       this.queryTerm = query;
     }
     let url = `/api/notes?kw=${query};page=${this.pageData}`
-    return this.http.get<NoteUnit[]>(url, this.createHeader())
+    if (this.tagData !== '') {
+      url += `;tag=${this.tagData}`;
+    }
+    return this.http.get<NoteUnit[]>(url, this.createHeader()).pipe(
+      tap((notes) => {
+        if (notes.length == 0) {
+          this.canLoad = false;
+        }
+      })
+    )
   }
 
   addNote(note: NoteUnit[]): Observable<any> {

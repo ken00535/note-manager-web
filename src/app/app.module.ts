@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -39,6 +40,7 @@ import { AuthGuard } from './guards/auth.guard';
   ],
   imports: [
     MatCardModule,
+    MatChipsModule,
     MatButtonModule,
     MatToolbarModule,
     MatIconModule,

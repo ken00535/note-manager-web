@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
-import { NoteUnit } from '../../model/note';
+import { NoteUnit, NewNote } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { catchError } from 'rxjs/operators';
@@ -26,7 +26,7 @@ export class EditNoteDialogComponent implements OnInit {
     private eventbus: EventbusService) { }
 
   ngOnInit(): void {
-    this.note = { id: '', content: '', comment: '' };
+    this.note = NewNote();
     if (this.noteService.selectedNote) {
       this.note = this.noteService.selectedNote;
     }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
@@ -16,7 +17,6 @@ export class NoteListComponent implements OnInit {
 
   public notes$: Observable<NoteUnit[]>;
   public displayNotes: NoteUnit[] = [];
-  public canLoad = true;
   public isLoading = false;
   public throttle = 100;
   public scrollDistance = 1;
@@ -27,23 +27,37 @@ export class NoteListComponent implements OnInit {
   private notePageAddedEvent$: Subscription;
 
   constructor(
+    private route: ActivatedRoute,
     private noteService: NoteService,
     private eventbus: EventbusService
-  ) { }
+  ) {
+    this.route.queryParams.subscribe((params) => {
+      if (typeof params['tag'] === 'undefined') {
+        this.noteService.tag = '';
+      } else {
+        this.noteService.tag = params['tag'];
+      }
+      this.getAllNotes();
+    });
+  }
 
   ngOnInit(): void {
     this.displayNotes = this.noteService.displayNotes;
+    this.getAllNotes();
+    this.subscribeNoteAddedEvent();
+    this.subscribeSearchNoteEvent();
+    this.subscribeNoteDeletedEvent();
+    this.subscribeNotePageAddedEvent();
+    this.subscribeLogoutEvent();
+  }
+
+  getAllNotes() {
     this.noteService.getNotes().subscribe(
       (notes) => {
         this.noteService.displayNotes = notes;
         this.displayNotes = notes;
       }
     )
-    this.subscribeNoteAddedEvent();
-    this.subscribeSearchNoteEvent();
-    this.subscribeNoteDeletedEvent();
-    this.subscribeNotePageAddedEvent();
-    this.subscribeLogoutEvent();
   }
 
   subscribeLogoutEvent() {
@@ -70,8 +84,6 @@ export class NoteListComponent implements OnInit {
         this.isLoading = false;
         if (notes.length !== 0) {
           this.noteService.displayNotes.push(...notes);
-        } else {
-          this.canLoad = false;
         }
       });
   }
@@ -81,7 +93,6 @@ export class NoteListComponent implements OnInit {
       .subscribe((message) => {
         if (message.topic === EventType.SEATCH_NOTE) {
           window.scroll(0, 0);
-          this.canLoad = true;
           this.displayNotes = this.noteService.displayNotes;
         }
       });
@@ -125,7 +136,7 @@ export class NoteListComponent implements OnInit {
 
   onScroll() {
     console.log("scrolled down!!");
-    if (this.canLoad && !this.isLoading) {
+    if (!this.isLoading) {
       this.isLoading = true;
       this.addPage();
     }

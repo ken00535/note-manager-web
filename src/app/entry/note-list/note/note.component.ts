@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NoteUnit } from '../../../model/note';
@@ -21,6 +22,7 @@ export class NoteComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
+    private router: Router,
     private snackBar: MatSnackBar,
     private noteService: NoteService,
     private eventbus: EventbusService
@@ -41,8 +43,20 @@ export class NoteComponent implements OnInit {
     this.dialog.open(EditNoteDialogComponent);
   }
 
+  onClickTag(tag: string) {
+    this.noteService.page = 1;
+    this.router.navigate(['/notes'], { queryParams: { tag: tag } });
+  }
+
   showCommentMessage(): boolean {
     if (this.note.comment !== '') {
+      return true;
+    }
+    return false;
+  }
+
+  showTags(): boolean {
+    if (this.note.tags !== []) {
       return true;
     }
     return false;

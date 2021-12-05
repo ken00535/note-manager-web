@@ -5,6 +5,13 @@
       <div *ngIf="showCommentMessage()" class="comment">
         <p>{{ note.comment }}</p>
       </div>
+      <div *ngIf="showTags()">
+        <mat-chip-list aria-label="Fish selection">
+          <mat-chip (click)="onClickTag(tag)" *ngFor="let tag of note.tags">
+            {{ tag }}
+          </mat-chip>
+        </mat-chip-list>
+      </div>
     </mat-card-content>
     <mat-card-actions>
       <button mat-button (click)="onEdit()">EDIT</button>
