@@ -8,7 +8,12 @@
 
 .comment {
     background: #F0F0F0;
+    margin-bottom: 14px;
     padding: 2px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+.tag-list {
+    margin: 10px;
 }

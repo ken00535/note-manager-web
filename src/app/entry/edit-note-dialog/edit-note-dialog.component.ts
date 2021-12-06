@@ -1,5 +1,7 @@
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { NoteService } from 'src/app/services/note.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit, NewNote } from '../../model/note';
@@ -18,6 +20,11 @@ export class EditNoteDialogComponent implements OnInit {
   public note: NoteUnit;
   public content: string;
   public comment: string;
+  public tags: string[];
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   constructor(
     public dialogRef: MatDialogRef<EditNoteDialogComponent>,
@@ -32,6 +39,7 @@ export class EditNoteDialogComponent implements OnInit {
     }
     this.content = this.note.content;
     this.comment = this.note.comment;
+    this.tags = this.note.tags;
   }
 
   onSubmit() {
@@ -45,6 +53,23 @@ export class EditNoteDialogComponent implements OnInit {
         this.eventbus.broadcast(EventType.NOTE_EDITED);
       });
     this.dialogRef.close();
+  }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    if (value) {
+      if (this.tags.indexOf(value) === -1) {
+        this.tags.push(value);
+      }
+    }
+    event.input.value = '';
+  }
+
+  remove(tag: string): void {
+    const index = this.tags.indexOf(tag);
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
   }
 
   showSnack() {
