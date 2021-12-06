@@ -45,6 +45,7 @@ export class EditNoteDialogComponent implements OnInit {
   onSubmit() {
     this.note.content = this.content;
     this.note.comment = this.comment;
+    this.note.tags = this.tags;
     this.noteService.updateNote(this.note)
       .pipe(
         catchError(() => this.showSnack())
