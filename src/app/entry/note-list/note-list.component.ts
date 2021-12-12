@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NoteService } from 'src/app/services/note.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { NoteUnit } from '../../model/note';
 import { EventType } from '../../model/const/event-type';
@@ -28,6 +29,7 @@ export class NoteListComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private loadingService: LoadingService,
     private noteService: NoteService,
     private eventbus: EventbusService
   ) {

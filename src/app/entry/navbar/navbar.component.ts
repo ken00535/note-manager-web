@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { NoteUnit } from 'src/app/model/note';
 import { NoteService } from 'src/app/services/note.service';
+import { LoadingService } from 'src/app/services/loading.service';
 import { AccountService } from 'src/app/services/account.service';
 import { EventbusService } from 'src/app/services/eventbus.service';
 import { AddNoteDialogComponent } from '../add-note-dialog/add-note-dialog.component';
@@ -28,6 +29,7 @@ export class NavbarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private router: Router,
+    private loadingService: LoadingService,
     private noteService: NoteService,
     private accountService: AccountService,
     private eventbus: EventbusService) { }
@@ -44,6 +46,17 @@ export class NavbarComponent implements OnInit {
   addNote() {
     this.noteService.selectedNote = null;
     this.dialog.open(AddNoteDialogComponent);
+  }
+
+  goHome() {
+    this.loadingService.show();
+    this.noteService.page = 1;
+    this.noteService.query = "";
+    this.noteService.getNotes("").subscribe((notes) => {
+      this.noteService.displayNotes = notes;
+      this.eventbus.broadcast(EventType.SEATCH_NOTE);
+    });
+    this.router.navigate(['/notes']);
   }
 
   search() {
