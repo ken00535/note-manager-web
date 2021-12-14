@@ -112,7 +112,7 @@ export class NoteListComponent implements OnInit {
         })
       )
       .subscribe((note: NoteUnit) => {
-        this.noteService.displayNotes.push(note);
+        this.noteService.displayNotes.unshift(note);
       });
   }
 
