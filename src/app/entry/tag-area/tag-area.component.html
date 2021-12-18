@@ -1,10 +1,10 @@
 <div class="container">
   <mat-card>
-    <mat-card-title class="title">Label</mat-card-title>
+    <mat-card-title class="title">Tag</mat-card-title>
     <mat-card-content>
       <mat-chip-list aria-label="Fish selection">
-        <mat-chip>
-          label1
+        <mat-chip (click)="onClickTag(tag.name)" *ngFor="let tag of (tags$ | async)">
+          {{ tag.name }}
         </mat-chip>
       </mat-chip-list>
     </mat-card-content>

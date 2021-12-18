@@ -1,6 +1,6 @@
 <app-navbar></app-navbar>
 <div fxFlex fxLayout="row" class="container">
-  <div fxFlex="80%" class="aside">
+  <div fxFlex="80%" fxFill>
     <div infinite-scroll
       [infiniteScrollDistance]="scrollDistance"
       [infiniteScrollThrottle]="throttle"
@@ -10,8 +10,8 @@
         </app-note>
     </div>
   </div>
-  <div fxFlex="1%" class="aside"></div>
-  <div fxFlex="18%" class="aside">
+  <div fxFlex="1%"></div>
+  <div fxFlex="18%">
     <app-tag-area></app-tag-area>
   </div>
 </div>
