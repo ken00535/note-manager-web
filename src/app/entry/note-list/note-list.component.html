@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
-<div class="container">
+<div fxFlex fxLayout="row" class="container">
+  <div fxFlex="80%" class="aside">
     <div infinite-scroll
       [infiniteScrollDistance]="scrollDistance"
       [infiniteScrollThrottle]="throttle"
@@ -8,4 +9,9 @@
         <app-note *ngFor="let note of displayNotes" [note]="note">
         </app-note>
     </div>
+  </div>
+  <div fxFlex="1%" class="aside"></div>
+  <div fxFlex="18%" class="aside">
+    <app-tag-area></app-tag-area>
+  </div>
 </div>

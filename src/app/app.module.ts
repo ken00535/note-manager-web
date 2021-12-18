@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -30,6 +31,7 @@ import { AppRoutesModule } from './app-routes.module';
 import { EditNoteDialogComponent } from './entry/edit-note-dialog/edit-note-dialog.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoadingComponent } from './entry/loading/loading.component';
+import { TagAreaComponent } from './entry/tag-area/tag-area.component';
 
 @NgModule({
   declarations: [
@@ -40,9 +42,11 @@ import { LoadingComponent } from './entry/loading/loading.component';
     NavbarComponent,
     AddNoteDialogComponent,
     EditNoteDialogComponent,
-    LoadingComponent
+    LoadingComponent,
+    TagAreaComponent
   ],
   imports: [
+    FlexLayoutModule,
     OverlayModule,
     MatCardModule,
     MatChipsModule,
